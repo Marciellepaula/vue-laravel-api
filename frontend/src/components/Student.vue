@@ -26,7 +26,7 @@
         </form>
 
 
-        <h2>Employee View</h2>
+        <h2>Student View</h2>
         <table class="table table-dark">
             <thead>
                 <tr>
@@ -89,7 +89,7 @@ export default {
 
     methods: {
         StudentLoad() {
-            var page = "http://127.0.0.1:8000/api/student";
+            var page = "http://localhost/api/student";
             axios.get(page)
                 .then(
                     ({ data }) => {
@@ -110,7 +110,7 @@ export default {
 
         },
         saveData() {
-            axios.post("http://127.0.0.1:8000/api/student", this.student)
+            axios.post("http://localhost/api/student", this.student)
                 .then(
                     ({ data }) => {
                         alert("saveddddd");
@@ -125,10 +125,10 @@ export default {
         },
         edit(student) {
             this.student = student;
-
         },
         updateData() {
-            var editrecords = 'http://127.0.0.1:8000/api/student/' + this.student.id;
+            console.log('damm');
+            var editrecords = 'http://localhost/api/student/' + this.student.id;
             axios.put(editrecords, this.student)
                 .then(
                     ({ data }) => {
@@ -145,10 +145,7 @@ export default {
 
         remove(student) {
 
-            var url = `http://127.0.0.1:8000/api/student/${student.id}`;
-
-
-
+            var url = `http://localhost/api/student/${student.id}`;
             // var url = 'http://127.0.0.1:8000/api/student/'+ student.id;
             axios.delete(url);
             alert("Deleteddd");
