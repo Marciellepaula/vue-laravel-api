@@ -1,136 +1,103 @@
 <template>
-  <div class="container">
-    <h2>Curses</h2>
+  <div>
+    <button @click="CourseLoad">Load Courses</button>
     <form @submit.prevent="save">
-      <div class="form-group">
-        <label>Name Curse</label>
-        <input
-          type="text"
-          v-model="curso.name"
-          class="form-control"
-          placeholder="Name"
-        />
-      </div>
-
-      <div class="form-group">
-        <label>photo</label>
-        <input
-          type="text"
-          v-model="curso.photo"
-          class="form-control"
-          placeholder="photo"
-        />
-      </div>
-      <div class="form-group">
-        <label>instructor</label>
-        <input
-          type="text"
-          v-model="curso.instructor"
-          class="form-control"
-          placeholder="instructor"
-        />
-      </div>
-      <button type="submit" class="btn btn-primary">Save</button>
+      <label for="name">Name:</label>
+      <input v-model="course.name" required />
+      <label for="instructor">Instructor:</label>
+      <input v-model="course.instructor" required />
+      <label for="photo">Photo:</label>
+      <input v-model="course.photo" required />
+      <button type="submit">Save</button>
     </form>
-
-    <h2>Courses</h2>
-    <table class="table table-dark">
-      <thead>
-        <tr>
-          <th scope="col">Courses</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr v-for="course in result" v-bind:key="course.id">
-          <td>{{ course.name }}</td>
-          <td>
-            <button type="button" class="btn btn-warning" @click="edit(course)">
-              Edit
-            </button>
-            <button
-              type="button"
-              class="btn btn-danger"
-              @click="remove(course)"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <ul>
+      <li v-for="c in result" :key="c.id">
+        {{ c.name }} - {{ c.instructor }} - {{ c.photo }}
+        <button @click="edit(c)">Edit</button>
+        <button @click="remove(c)">Remove</button>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
 import axios from "redaxios";
 
 export default {
   name: "course",
-  data() {
-    return {
-      result: {},
-      course: {
-        id: "",
-        name: "",
-        instructor: "",
-        photo: "",
-      },
-    };
-  },
-  created() {
-    this.CourseLoad();
-  },
-  mounted() {
-    console.log("mounted() called.......");
-  },
+  setup() {
+    const result = ref([]);
+    const course = ref({
+      id: "",
+      name: "",
+      instructor: "",
+      photo: "",
+    });
 
-  methods: {
-    CourseLoad() {
-      var page = "http://localhost/api/student";
-      axios.get(page).then(({ data }) => {
+    const CourseLoad = () => {
+      axios.get("http://localhost/api/student").then(({ data }) => {
         console.log(data);
-        this.result = data;
+        result.value = data;
       });
-    },
+    };
 
-    save() {
-      if (this.course.id == "") {
-        this.saveData();
+    const save = () => {
+      if (course.value.id === "") {
+        saveData();
       } else {
-        this.updateData();
+        updateData();
       }
-    },
-    saveData() {
-      axios
-        .post("http://localhost/api/student", this.course)
-        .then(({ data }) => {
-          alert("saveddddd");
-          this.course.Load();
-          this.course.name = "";
-          (this.course.photo = ""), (this.course.instructor = "");
-        });
-    },
-    edit(course) {
-      this.course = course;
-    },
-    updateData() {
-      var editrecords = "http://localhost/api/student/" + this.course.id;
-      axios.put(editrecords, this.course).then(({ data }) => {
-        this.course.name = "";
-        (this.course.photo = ""), (this.instructor.instructor = "");
-        alert("Updated!!!");
-        this.courseLoad();
-      });
-    },
+    };
 
-    remove(curse) {
-      var url = `http://localhost/api/student/${curse.id}`;
-      // var url = 'http://127.0.0.1:8000/api/student/'+ student.id;
+    const saveData = () => {
+      axios
+        .post("http://localhost/api/student", course.value)
+        .then(({ data }) => {
+          alert("Saved!");
+          CourseLoad();
+          course.value.name = "";
+          course.value.photo = "";
+          course.value.instructor = "";
+        });
+    };
+
+    const edit = (selectedCourse) => {
+      course.value = { ...selectedCourse }; // Copying values to avoid reactivity issues
+    };
+
+    const updateData = () => {
+      const editRecords = `http://localhost/api/student/${course.value.id}`;
+      axios.put(editRecords, course.value).then(() => {
+        alert("Updated!");
+        CourseLoad();
+        course.value.name = "";
+        course.value.photo = "";
+        course.value.instructor = "";
+      });
+    };
+
+    const remove = (selectedCourse) => {
+      const url = `http://localhost/api/student/${selectedCourse.id}`;
       axios.delete(url);
-      alert("Deleted");
-      this.CourseLoad();
-    },
+      alert("Deleted!");
+      CourseLoad();
+    };
+
+    onMounted(() => {
+      console.log("mounted() called....");
+      CourseLoad();
+    });
+
+    return {
+      result,
+      course,
+      CourseLoad,
+      save,
+      edit,
+      updateData,
+      remove,
+    };
   },
 };
 </script>
