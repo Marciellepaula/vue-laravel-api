@@ -1,6 +1,12 @@
-<script setup>
-import Student from './components/Student.vue'
-</script>
 <template>
-  <Student />
+  <router-view></router-view>
 </template>
+
+<script>
+export default {
+  name: "App",
+  components: {},
+};
+</script>
+
+<style></style>

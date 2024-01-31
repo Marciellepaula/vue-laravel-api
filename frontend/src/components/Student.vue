@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <button @click="goToAnotherTemplate">Go to Another Template</button>
     <h2>Studednt Registration</h2>
     <form @submit.prevent="save">
       <div class="form-group">
@@ -77,6 +78,13 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "redaxios";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const goToAnotherTemplate = () => {
+  router.push("/Course");
+};
 
 const result = ref([]);
 const student = ref({
