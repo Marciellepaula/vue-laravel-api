@@ -1,10 +1,10 @@
 <template>
   <div class="container mt-5">
-    <button class="btn btn-primary" @click="CourseLoad">Load Courses</button>
+    <button class="btn btn-primary" @click="coursesLoad">Load coursess</button>
     <form @submit.prevent="save" class="mt-3" enctype="multipart/form-data">
       <div class="mb-3">
         <label for="name" class="form-label">Name:</label>
-        <input v-model="course.name" class="form-control" required />
+        <input v-model="courses.name" class="form-control" required />
       </div>
       <div class="mb-3">
         <label for="photo" class="form-label">Photo:</label>
@@ -24,11 +24,10 @@
         <div class="d-flex justify-content-between align-items-center">
           <span>{{ c.name }}</span>
           <img
-            v-if="c.photo"
             :src="c.photo"
             alt="Course Photo"
             class="img-thumbnail"
-            style="max-width: 100px"
+            style="max-width: 500px"
           />
           <div>
             <button @click="edit(c)" class="btn btn-warning">Edit</button>
@@ -45,7 +44,7 @@ import { ref, onMounted } from "vue";
 import axios from "redaxios";
 
 const result = ref([]); // Initialize as a ref
-const course = ref({
+const courses = ref({
   id: "",
   name: "",
   photo: null,
@@ -55,20 +54,17 @@ const handleImageChange = (event) => {
   const file = event.target.files[0];
 
   if (file) {
-    // Read the selected image file
+    // Your existing code to read and set the file
     const reader = new FileReader();
-
     reader.onload = () => {
-      // Set the photo property to the base64 representation of the image
-      course.value.photo = reader.result;
+      courses.value.photo = file; // Set the file object, not the base64 representation
     };
-
     reader.readAsDataURL(file);
   }
 };
 
 const save = () => {
-  if (course.value.id === "") {
+  if (courses.value.id === "") {
     saveData();
   } else {
     updateData();
@@ -76,20 +72,23 @@ const save = () => {
 };
 
 const saveData = () => {
+  const formData = new FormData();
+  formData.append("name", courses.value.name);
+  formData.append("photo", courses.value.photo);
+
   axios
-    .post("http://localhost/api/course", course.value, {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    })
+    .post("http://localhost/api/course", formData)
     .then(({ data }) => {
       alert("Saved!");
-      CourseLoad();
+      coursesLoad();
       resetForm();
+    })
+    .catch((error) => {
+      console.error("Error saving data:", error);
     });
 };
 
-const CourseLoad = () => {
+const coursesLoad = () => {
   axios
     .get("http://localhost/api/course")
     .then(({ data }) => {
@@ -100,22 +99,23 @@ const CourseLoad = () => {
     });
 };
 const resetForm = () => {
-  course.value.id = "";
-  course.value.name = "";
-  course.value.photo = "";
+  courses.value.id = "";
+  courses.value.name = "";
+  courses.value.photo = "";
 };
 
-const edit = (selectedCourse) => {
-  course.value = { ...selectedCourse };
+const edit = (selectedcourses) => {
+  courses.value = { ...selectedcourses };
 };
+// Define the base API URL here
 
 const updateData = () => {
-  const editRecords = `http://localhost/api/course/${course.value.id}`;
+  const editRecords = `http://localhost/api/course/${courses.value.id}`;
   axios
-    .put(editRecords, course.value)
+    .put(editRecords, courses.value)
     .then(() => {
       alert("Updated!");
-      CourseLoad();
+      coursesLoad();
       resetForm();
     })
     .catch((error) => {
@@ -123,13 +123,13 @@ const updateData = () => {
     });
 };
 
-const remove = (selectedCourse) => {
-  const url = `http://localhost/api/course/${selectedCourse.id}`;
+const remove = (selectedcourses) => {
+  const url = `http://localhost/api/course/${selectedcourses.id}`;
   axios
     .delete(url)
     .then(() => {
       alert("Deleted!");
-      CourseLoad();
+      coursesLoad();
     })
     .catch((error) => {
       console.error("Error deleting data:", error);
@@ -138,6 +138,6 @@ const remove = (selectedCourse) => {
 
 onMounted(() => {
   console.log("mounted() called....");
-  CourseLoad();
+  coursesLoad();
 });
 </script>
