@@ -2,11 +2,17 @@
   <form @submit.prevent="save" class="mt-3" enctype="multipart/form-data">
     <div class="mb-3">
       <label for="name" class="form-label">Name:</label>
-      <input v-model="courses.name" class="form-control" required />
+      <input
+        v-model="course.name"
+        value="{{ course.name }}"
+        class="form-control"
+        required
+      />
     </div>
     <div class="mb-3">
       <label for="photo" class="form-label">Photo:</label>
       <input
+        value="course.photo"
         type="file"
         accept="image/png, image/jpeg, image/jpg"
         name="photo"
@@ -21,8 +27,8 @@
 
 <script setup>
 import { ref } from "vue";
-
-const courses = ref({
+import axios from "redaxios";
+const course = ref({
   id: "",
   name: "",
   photo: null,
@@ -49,20 +55,17 @@ const save = () => {
   }
 };
 
-const saveData = () => {
-  const formData = new FormData();
-  formData.append("name", courses.value.name);
-  formData.append("photo", courses.value.photo);
-
+const updateData = () => {
+  const editRecords = `http://localhost/api/course/${courses.value.id}`;
   axios
-    .post("http://localhost/api/course", formData)
-    .then(({ data }) => {
-      alert("Saved!");
+    .put(editRecords, courses.value)
+    .then(() => {
+      alert("Updated!");
       coursesLoad();
       resetForm();
     })
     .catch((error) => {
-      console.error("Error saving data:", error);
+      console.error("Error updating data:", error);
     });
 };
 </script>

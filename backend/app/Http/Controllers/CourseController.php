@@ -68,9 +68,16 @@ class CourseController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $course = $this->course->find($id);
+
+        $course = Course::find($id);
+
+        if (!$course) {
+            return response()->json(['message' => 'Course not found'], 404);
+        }
+
         $course->update($request->all());
-        return $course;
+
+        return response()->json(['message' => 'Course updated successfully', 'course' => $course]);
     }
 
     public function destroy(string $id)

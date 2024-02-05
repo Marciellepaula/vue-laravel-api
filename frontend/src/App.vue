@@ -2,37 +2,42 @@
   <div class="container mt-5">
     <button class="btn btn-primary" @click="coursesLoad">Load courses</button>
     <CourseForm :buttonLabel="buttonLabel" />
-    <CourseList :result="result" @edit="edit" @remove="remove" />
+    <!-- Example usage in the parent component -->
+
+    <CourseList :result="course" @edit="editCourse" @remove="removeCourse" />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import axios from "redaxios";
 import CourseForm from "./components/CourseForm.vue";
 import CourseList from "./components/CourseList.vue";
+import courseUpdate from "./components/CourseUpdate.vue";
 
-const result = ref([]); // Initialize as a ref
+const result = ref([]);
 const courses = ref({
   id: "",
   name: "",
   photo: null,
-}); // Initialize as a ref
-
+});
 const buttonLabel = ref("Save");
 
 const save = () => {
   if (courses.value.id === "") {
-    saveData();
+    // Your existing save logic
   } else {
-    updateData();
+    // Your existing update logic
   }
 };
 
-// ... Rest of your existing setup code ...
+const editCourse = (selectedCourse) => {
+  // Handle the edit action for the selected course
+  console.log("Edit course:", selectedCourse);
+};
 
-onMounted(() => {
-  console.log("mounted() called....");
-  coursesLoad();
-});
+const removeCourse = (selectedCourse) => {
+  // Handle the remove action for the selected course
+  console.log("Remove course:", selectedCourse);
+};
 </script>

@@ -8,7 +8,7 @@ import Course from "./components/Course.vue";
 import Student from "./components/Student.vue";
 
 const routes = [
-  { path: "/Course", component: Course },
+  // { path: "/Course", component: Course },
   { path: "/Student", component: Student },
 ];
 
