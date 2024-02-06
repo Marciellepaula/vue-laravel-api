@@ -9,6 +9,7 @@
 </template>
 
 <script setup>
+import CourseListItem from "./components/CourseListItem.vue";
 import { ref } from "vue";
 import axios from "redaxios";
 import CourseForm from "./components/CourseForm.vue";
@@ -16,7 +17,7 @@ import CourseList from "./components/CourseList.vue";
 import courseUpdate from "./components/CourseUpdate.vue";
 
 const result = ref([]);
-const courses = ref({
+const course = ref({
   id: "",
   name: "",
   photo: null,
