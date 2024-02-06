@@ -1,4 +1,5 @@
 <template>
+  <h1>List Records</h1>
   <form @submit.prevent="save" class="mt-3" enctype="multipart/form-data">
     <div class="mb-3">
       <label for="name" class="form-label">Name:</label>

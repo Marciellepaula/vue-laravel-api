@@ -1,4 +1,5 @@
 <template>
+  <h1>List Records</h1>
   <ul class="mt-3 list-group">
     <CourseListItem
       v-for="course in result"
