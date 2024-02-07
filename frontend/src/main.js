@@ -3,12 +3,13 @@ import App from "./App.vue";
 import "./style.css";
 import { createRouter, createWebHistory } from "vue-router";
 
-import CourseForm from "./components/CourseForm.vue";
-import CourseUpdate from "./components/CourseUpdate.vue";
-import CourseList from "./components/CourseList.vue";
+import CourseForm from "./views/CourseForm.vue";
+import CourseUpdate from "./views/CourseUpdate.vue";
+import CourseList from "./views/CourseList.vue";
+import Home from "./views/Home.vue";
 
 const routes = [
-  { path: "/", redirect: "/courses" }, // Redirect to courses list by default
+  { path: "/", component: Home }, // Redirect to courses list by default
   { path: "/courses", component: CourseList }, // Route for the course list
   { path: "/courses/new", component: CourseForm }, // Route for adding a new course
   {

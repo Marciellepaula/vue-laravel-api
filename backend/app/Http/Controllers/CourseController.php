@@ -58,11 +58,11 @@ class CourseController extends Controller
     public function show(string $id)
     {
         $course = $this->course->find($id);
-
+        $course->photo = $course->photo ? url("storage/{$course->photo}") : null;
         if (!$course) {
             return response()->json(['error' => 'Course not found'], 404);
         }
-
+        $course->toArray();
         return response()->json(['data' => $course], 200);
     }
 

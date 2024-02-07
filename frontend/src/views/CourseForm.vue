@@ -21,8 +21,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-
+import { ref, onMounted } from "vue";
+import axios from "redaxios";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const result = ref([]);
 const courses = ref({
   id: "",
   name: "",
@@ -59,8 +62,6 @@ const saveData = () => {
     .post("http://localhost/api/course", formData)
     .then(({ data }) => {
       alert("Saved!");
-      coursesLoad();
-      resetForm();
     })
     .catch((error) => {
       console.error("Error saving data:", error);
