@@ -1,5 +1,6 @@
 <template>
   <div>
+<<<<<<< HEAD
     <div>
       <input v-model="user.first_name" type="text">
     </div>
@@ -29,3 +30,10 @@ const fullname = computed(getter: () => {
 
 const total = computed(get: () => products.reduce)
 </script>
+=======
+    <router-view />
+  </div>
+</template>
+
+<style lang="scss"></style>
+>>>>>>> 0de6205543eb16ded42c71b11a5e1a8c9bf72c7b
