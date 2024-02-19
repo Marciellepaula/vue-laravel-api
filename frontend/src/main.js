@@ -7,6 +7,8 @@ import CourseForm from "./views/CourseForm.vue";
 import CourseUpdate from "./views/CourseUpdate.vue";
 import CourseList from "./views/CourseList.vue";
 import Home from "./views/Home.vue";
+import login from "./components/auth/login.vue";
+import register from "./components/auth/register.vue";
 
 const routes = [
   { path: "/", component: Home }, // Redirect to courses list by default
@@ -18,6 +20,8 @@ const routes = [
     component: CourseUpdate,
     props: true,
   }, // Route for editing a course
+  { path: "/register", component: register }, // Route for the course list
+  { path: "/login", component: login },
 ];
 
 const router = createRouter({

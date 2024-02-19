@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Dotenv\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+
 
 class LoginController extends Controller
 {
@@ -21,8 +22,13 @@ class LoginController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return $this->sendError('Validation Error.', (array)$validator->errors()->toJson(), 400);
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation Error',
+                'errors' => $validator->errors()
+            ], 400);
         }
+
 
         if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
@@ -32,6 +38,11 @@ class LoginController extends Controller
         $success['token'] = $user->createToken('MyApp')->accessToken;
         $success['name'] = $user->name;
 
-        return $this->sendResponse($success, 'User login successfully.');
+        // return $this->sendResponse($success, 'User login successfully.');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Login successfully.',
+        ], 200);
     }
 }
