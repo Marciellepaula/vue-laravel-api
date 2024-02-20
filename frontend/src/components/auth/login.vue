@@ -11,7 +11,7 @@ const form = ref({
 
 const login = () => {
   axios
-    .post("/api/auth/login", form.value)
+    .post("http://localhost/api/course", form.value)
     .then((response) => {
       User.responseAfterLogin(response);
       Toast.fire({
@@ -36,7 +36,7 @@ const login = () => {
   <div>
     <div class="container">
       <div class="row justify-content-left">
-        <div class="col-lg-5 offset-2">
+        <div class="">
           <div class="card shadow-lg border-primary rounded-lg mt-5">
             <div class="card-header">
               <h3 class="text-center text-primary font-weight-bold my-3">
@@ -54,14 +54,6 @@ const login = () => {
                     placeholder="Enter Email Address"
                     v-model="form.email"
                   />
-
-                  <small
-                    class="text-danger"
-                    v-if="errors.email"
-                    style="color: red"
-                    >{{ errors.email[0] }}</small
-                  >
-                  <!---------->
                 </div>
 
                 <div class="form-group">
@@ -73,13 +65,6 @@ const login = () => {
                     v-model="form.password"
                     placeholder="Enter Password"
                   />
-
-                  <small
-                    class="text-danger"
-                    v-if="errors.password"
-                    style="color: red"
-                    >{{ errors.password[0] }}</small
-                  >
                 </div>
 
                 <div class="form-group">

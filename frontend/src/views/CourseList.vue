@@ -23,7 +23,12 @@ const coursesLoad = () => {
       result.value = data;
     })
     .catch((error) => {
-      console.error("Error loading courses:", error);
+      if (error.response && error.response.status === 401) {
+        // Redirect to the login page
+        router.push("/login"); // Assuming 'router' is your Vue Router instance
+      } else {
+        console.error("Error loading courses:", error);
+      }
     });
 };
 

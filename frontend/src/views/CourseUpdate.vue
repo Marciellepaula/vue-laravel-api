@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineExpose } from "vue";
+import { ref, defineProps } from "vue";
 import axios from "redaxios";
 import { useRouter } from "vue-router";
 const router = useRouter();
