@@ -11,7 +11,7 @@ import login from "./components/auth/login.vue";
 import register from "./components/auth/register.vue";
 
 const routes = [
-  { path: "/", component: Home }, // Redirect to courses list by default
+  { path: "/", component: Home, meta: { requiresAuth: true } }, // Redirect to courses list by default
   { path: "/courses", component: CourseList }, // Route for the course list
   { path: "/courses/new", component: CourseForm }, // Route for adding a new course
   {

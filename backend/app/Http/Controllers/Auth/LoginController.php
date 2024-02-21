@@ -35,14 +35,29 @@ class LoginController extends Controller
         }
 
         $user = Auth::user();
-        $success['token'] = $user->createToken('MyApp')->accessToken;
+
         $success['name'] = $user->name;
 
-        // return $this->sendResponse($success, 'User login successfully.');
+        $accessToken = $user->createToken('MyApp')->accessToken->token;
 
         return response()->json([
             'success' => true,
             'message' => 'Login successfully.',
+            'token' => $accessToken, // Return only the token string
         ], 200);
+    }
+
+    protected function sendError($message, $data = [], $code = 404)
+    {
+        $response = [
+            'success' => false,
+            'message' => $message,
+        ];
+
+        if (!empty($data)) {
+            $response['data'] = $data;
+        }
+
+        return response()->json($response, $code);
     }
 }

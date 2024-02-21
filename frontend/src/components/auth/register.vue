@@ -14,7 +14,7 @@ const form = ref({
 const signup = () => {
   // alert('done');   //--testing submit
   axios
-    .post("/api/auth/signup", form.value)
+    .post("http://localhost/api/register", form.value)
     .then((response) => {
       User.responseAfterLogin(response);
       Toast.fire({

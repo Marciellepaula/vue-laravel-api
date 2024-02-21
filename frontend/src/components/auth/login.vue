@@ -1,35 +1,3 @@
-<script setup>
-import { ref } from "vue";
-import axios from "redaxios";
-import { useRouter } from "vue-router";
-const router = useRouter();
-
-const form = ref({
-  email: null,
-  password: null,
-});
-
-const login = () => {
-  axios
-    .post("http://localhost/api/course", form.value)
-    .then((response) => {
-      User.responseAfterLogin(response);
-      Toast.fire({
-        icon: "success",
-        title: "Signed in Successfully",
-      });
-      router.push({ name: "home" }); // or, router.push('/home')
-    })
-    .catch((error) => {
-      Toast.fire({
-        icon: "warning",
-        title: "Email or Password Invalid",
-      });
-      console.error("Login Error:", error);
-    });
-};
-</script>
-
 <style></style>
 
 <template>
@@ -102,3 +70,33 @@ const login = () => {
     </div>
   </div>
 </template>
+<script setup>
+import { ref } from "vue";
+import axios from "redaxios"; // Using regular Axios
+import { useRouter } from "vue-router";
+import { createWebHistory } from "vue-router";
+// Import your Home component
+
+const router = useRouter();
+
+const form = ref({
+  email: "",
+  password: "",
+});
+
+const login = () => {
+  axios
+    .post("http://localhost/api/login", form.value) // Correct endpoint for login
+    .then((response) => {
+      if (response.data && response.data.success) {
+        router.push("/");
+      } else {
+        console.error("Login Error:", response.data.message);
+      }
+    })
+    .catch((error) => {
+      // Handle network errors or other issues that may occur during the request
+      console.error("Login Error:", error);
+    });
+};
+</script>

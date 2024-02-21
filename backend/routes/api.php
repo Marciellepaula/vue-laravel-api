@@ -24,11 +24,11 @@ use App\Http\Controllers\Auth\LogoutController;
 
 Route::apiResource('/student', StudentController::class);
 
-Route::middleware(['auth:web'])->group(function () {
+Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('/course', CourseController::class);
+    Route::post('/logout', [LogoutController::class, 'logout']);
 });
 
 
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::post('/logout', [LogoutController::class, 'logout']);
