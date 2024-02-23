@@ -18,16 +18,18 @@ const result = ref([]);
 
 const coursesLoad = () => {
   axios
-    .get("http://localhost/api/course")
+    .get("http://localhost/api/course", {
+      console.log();
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the token in the Authorization header
+      },
+    })
     .then(({ data }) => {
       result.value = data;
     })
     .catch((error) => {
-      if (error.response && error.response.status === 401) {
-        // Redirect to the login page
-        router.push("/login"); // Assuming 'router' is your Vue Router instance
-      } else {
-        console.error("Error loading courses:", error);
+      if (error) {
+        router.push("/login");
       }
     });
 };

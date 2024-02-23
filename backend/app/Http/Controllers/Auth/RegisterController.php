@@ -15,40 +15,18 @@ class RegisterController extends Controller
     public function register(Request $request): JsonResponse
     {
         // Validate the incoming request data
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:8' // Ensure you have a field for password confirmation in your form
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|unique:users,email|max:255',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Check if validation fails
-        if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation Error',
-                'errors' => $validator->errors()
-            ], 400);
-        }
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
-        // Create a new user record
-        $user = $this->createUser($request->all());
-
-        // Generate an access token for the user
-        $token = $user->createToken('MyApp')->accessToken;
-
-        // Return a success response with user details and access token
-        return response()->json([
-            'success' => true,
-            'message' => 'User registered successfully.',
-            'user' => $user,
-            'access_token' => $token
-        ], 201);
-    }
-
-    protected function createUser(array $data): User
-    {
-        // Hash the user's password
-        $data['password'] = Hash::make($data['password']);
-        return User::create($data);
+        return response()->json(['message' => 'User registered successfully', 'user' => $user]);
     }
 }

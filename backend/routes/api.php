@@ -24,10 +24,13 @@ use App\Http\Controllers\Auth\LogoutController;
 
 Route::apiResource('/student', StudentController::class);
 
-Route::middleware(['auth:api'])->group(function () {
-    Route::apiResource('/course', CourseController::class);
-    Route::post('/logout', [LogoutController::class, 'logout']);
-});
+Route::middleware('auth:sanctum')->group(
+    function () {
+        Route::apiResource('/course', CourseController::class);
+    }
+);
+
+
 
 
 Route::post('/register', [RegisterController::class, 'register']);
