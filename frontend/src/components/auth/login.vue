@@ -89,6 +89,8 @@ const login = () => {
     .post("http://localhost/api/login", form.value) // Correct endpoint for login
     .then((response) => {
       if (response.data && response.data.success) {
+        const token = response.data.token; // Assuming the token is returned in the response
+        localStorage.setItem("token", token);
         router.push("/");
       } else {
         console.error("Login Error:", response.data.message);

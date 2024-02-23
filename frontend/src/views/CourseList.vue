@@ -1,4 +1,5 @@
 <template>
+  <Header />
   <h1>List Records</h1>
   <ul class="mt-3 list-group">
     <CourseListItem
@@ -13,24 +14,28 @@
 import { ref, onMounted } from "vue";
 import axios from "redaxios";
 import CourseListItem from "./CourseListItem.vue";
+import Header from "../components/Header.vue";
 
 const result = ref([]);
 
 const coursesLoad = () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("Token not found in localStorage");
+    return;
+  }
+
   axios
     .get("http://localhost/api/course", {
-      console.log();
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the token in the Authorization header
+        Authorization: `Bearer ${token}`, // Include the token in the Authorization header
       },
     })
     .then(({ data }) => {
       result.value = data;
     })
     .catch((error) => {
-      if (error) {
-        router.push("/login");
-      }
+      console.error("Error loading courses:", error);
     });
 };
 
