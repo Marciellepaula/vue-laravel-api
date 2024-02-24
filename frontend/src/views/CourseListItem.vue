@@ -1,16 +1,13 @@
 <template>
   <div class="d-flex justify-content-between align-items-center">
     <span>{{ course.name }}</span>
-    <img
-      :src="course.photo"
-      alt="Course Photo"
-      class="img-thumbnail"
-      style="max-width: 500px"
-    />
+    <img :src="course.course_image" alt="Course Photo" class="img-thumbnail" style="max-width: 500px" />
     <div>
       <button @click="editCourse(course)" class="btn btn-warning">Edit</button>
       <button @click="removeCourse" class="btn btn-danger">Remove</button>
+
     </div>
+
   </div>
 </template>
 
@@ -31,6 +28,8 @@ const editCourse = (selectedCourse) => {
     console.error("Error navigating to edit course page:", error);
   }
 };
+
+
 
 const removeCourse = () => {
   // Handle the remove action for the selected course

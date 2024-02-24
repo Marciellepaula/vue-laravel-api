@@ -17,17 +17,11 @@ class CourseController extends Controller
 
     public function index()
     {
-        $courses = Course::all();
-
-        // Use toArray to include both attributes and original arrays
-        $courses->each(function ($course) {
-            $course->photo = $course->photo ? url("storage/{$course->photo}") : null;
-        });
-
+        $courses = Course::paginate(10);
         return response()->json($courses->toArray());
     }
 
-
+    // Fetch all courses with pagination
 
     public function store(Request $request)
     {

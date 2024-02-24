@@ -1,11 +1,7 @@
 <template>
   <h1>List Records</h1>
   <ul class="mt-3 list-group">
-    <CourseListItem
-      v-for="course in result"
-      :key="course.id"
-      :course="course"
-    />
+    <CourseListItem v-for="course in result" :key="course.id" :course="course" />
   </ul>
 </template>
 
@@ -16,16 +12,22 @@ import CourseListItem from "./CourseListItem.vue";
 
 const result = ref([]);
 
+const page = ref(1);
+const totalPages = ref(null)
+
 const coursesLoad = () => {
   axios
     .get("http://localhost/api/course")
     .then(({ data }) => {
-      result.value = data;
+      result.value = data.data;
+      console.log(result.value);
     })
     .catch((error) => {
       console.error("Error loading courses:", error);
     });
 };
+
+
 
 onMounted(() => {
   console.log("mounted() called....");

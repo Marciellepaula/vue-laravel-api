@@ -1,11 +1,7 @@
 <template>
   <div>
     <h1>Edit Course</h1>
-    <form
-      @submit.prevent="updateCourse"
-      class="mt-3"
-      enctype="multipart/form-data"
-    >
+    <form @submit.prevent="updateCourse" class="mt-3" enctype="multipart/form-data">
       <div class="mb-3">
         <label for="name" class="form-label">Name:</label>
         <input v-model="course.name" class="form-control" required />
@@ -14,20 +10,11 @@
       <!--  -->
       <div class="mb-3">
         <label for="photo" class="form-label">Photo:</label>
-        <input
-          type="file"
-          name="photo"
-          :class="{ 'is-invalid': course.errors.has('photo') }"
-          class="form-control"
-          @change="handleImageChange"
-        />
+        <input type="file" name="photo" :class="{ 'is-invalid': course.errors.has('photo') }" class="form-control"
+          @change="handleImageChange" />
         <has-error :course="course" field="image" />
-        <img
-          :key="course.id"
-          :src="course.photo"
-          style="width: 200px; height: 200px; object-fit: cover"
-          class="img-thumbnail"
-        />
+        <img :key="course.id" :src="course.photo" style="width: 200px; height: 200px; object-fit: cover"
+          class="img-thumbnail" />
       </div>
       <button type="submit" class="btn btn-success">Update</button>
     </form>
@@ -35,7 +22,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineExpose } from "vue";
+import { ref, defineProps } from "vue";
 import axios from "redaxios";
 import { useRouter } from "vue-router";
 const router = useRouter();
