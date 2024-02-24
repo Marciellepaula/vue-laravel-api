@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     use HasFactory;
+<<<<<<< HEAD
+=======
+    protected $primaryKey = 'id';
+>>>>>>> 2291dd17b89b67b21358656895fd1414dafcc3b0
 
     protected $fillable = [
         'name',

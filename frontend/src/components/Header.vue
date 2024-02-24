@@ -13,7 +13,10 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <div
+        class="collapse btn-primary navbar-collapse justify-content-end"
+        id="navbarNav"
+      >
         <ul class="navbar-nav">
           <li class="nav-item">
             <router-link to="/" class="nav-link">Home</router-link>
@@ -22,9 +25,7 @@
             <router-link to="/courses" class="nav-link">Courses</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/courses/new" class="nav-link"
-              >Add New Course</router-link
-            >
+            <router-link to="/courses" class="nav-link">Sair</router-link>
           </li>
         </ul>
       </div>

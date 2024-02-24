@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\Storage;
 class CourseController extends Controller
 {
     protected $course;
+
     public function __construct()
     {
+        // $this->middleware('auth');
         $this->course = new Course();
     }
 

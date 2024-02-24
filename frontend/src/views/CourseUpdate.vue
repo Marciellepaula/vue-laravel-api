@@ -46,20 +46,26 @@ const handleImageChange = (event) => {
     reader.readAsDataURL(file);
   }
 };
+const updateCourse = () => {
+  const formData = new FormData();
+  formData.append("name", course.value.name);
+  formData.append("photo", course.value.photo);
 
-const updateCourse = async () => {
-  try {
-    const formData = new FormData();
-    formData.append("name", course.value.name);
-    formData.append("photo", course.value.photo);
-
-    const editUrl = `http://localhost/api/course/${props.id}`;
-    await axios.put(editUrl, formData);
-    alert("Course updated successfully!");
-  } catch (error) {
-    console.error("Error updating course:", error);
-    alert("Failed to update course. Please try again.");
-  }
+  const editUrl = `http://localhost/api/course/${props.id}`;
+  axios
+    .put(editUrl, formData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the token in the Authorization header
+        "Content-Type": "multipart/form-data", // Ensure proper content type for FormData
+      },
+    })
+    .then((response) => {
+      alert("Course updated successfully!");
+    })
+    .catch((error) => {
+      console.error("Error updating course:", error);
+      alert("Failed to update course. Please try again.");
+    });
 };
 
 const fetchCourse = async () => {
