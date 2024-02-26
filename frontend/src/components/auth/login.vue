@@ -86,10 +86,10 @@ const form = ref({
 
 const login = () => {
   axios
-    .post("http://localhost/api/login", form.value) // Correct endpoint for login
+    .post("http://localhost/api/login", form.value)
     .then((response) => {
       if (response.data && response.data.success) {
-        const token = response.data.token; // Assuming the token is returned in the response
+        const token = response.data.token;
         localStorage.setItem("token", token);
         router.push("/");
       } else {

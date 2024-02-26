@@ -2,6 +2,9 @@
 import { ref } from "vue";
 import axios from "redaxios";
 import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 
 const router = useRouter();
 const form = ref({
@@ -17,7 +20,7 @@ const signup = () => {
     .post("http://localhost/api/register", form.value)
     .then((response) => {
       User.responseAfterLogin(response);
-      Toast.fire({
+      toast.fire({
         icon: "success",
         title: "Signed in Successfully",
       });

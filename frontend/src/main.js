@@ -9,10 +9,11 @@ import CourseList from "./views/CourseList.vue";
 import Home from "./views/Home.vue";
 import login from "./components/auth/login.vue";
 import register from "./components/auth/register.vue";
+import logout from "./components/auth/logout.vue";
 
 const routes = [
-  { path: "/", component: Home, meta: { requiresAuth: true } }, // Redirect to courses list by default
-  { path: "/courses", component: CourseList, meta: { requiresAuth: true } }, // Route for the course list
+  { path: "/", component: Home, meta: { requiresAuth: true } },
+  { path: "/courses", component: CourseList, meta: { requiresAuth: true } },
   { path: "/courses/new", component: CourseForm, meta: { requiresAuth: true } }, // Route for adding a new course
   {
     path: "/courseUpdate/:id",
@@ -21,8 +22,9 @@ const routes = [
     props: true,
     meta: { requiresAuth: true },
   }, // Route for editing a course
-  { path: "/register", component: register }, // Route for the course list
+  { path: "/register", component: register },
   { path: "/login", component: login },
+  { path: "/logout", component: logout },
 ];
 
 const router = createRouter({

@@ -2,7 +2,11 @@
   <Header />
   <h1>List Records</h1>
   <ul class="mt-3 list-group">
-    <CourseListItem v-for="course in result" :key="course.id" :course="course" />
+    <CourseListItem
+      v-for="course in result"
+      :key="course.id"
+      :course="course"
+    />
   </ul>
 </template>
 
@@ -15,7 +19,7 @@ import Header from "../components/Header.vue";
 const result = ref([]);
 
 const page = ref(1);
-const totalPages = ref(null)
+const totalPages = ref(null);
 
 const coursesLoad = () => {
   const token = localStorage.getItem("token");
@@ -23,7 +27,6 @@ const coursesLoad = () => {
     console.error("Token not found in localStorage");
     return;
   }
-
   axios
     .get("http://localhost/api/course", {
       headers: {
@@ -38,8 +41,6 @@ const coursesLoad = () => {
       console.error("Error loading courses:", error);
     });
 };
-
-
 
 onMounted(() => {
   console.log("mounted() called....");

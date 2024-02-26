@@ -24,21 +24,16 @@
           <li class="nav-item">
             <router-link to="/courses" class="nav-link">Courses</router-link>
           </li>
-          <li class="nav-item">
-            <router-link to="/courses" class="nav-link">Sair</router-link>
-          </li>
+          <Logout />
         </ul>
       </div>
     </nav>
   </header>
 </template>
 
-<script>
-export default {
-  name: "Header",
-};
+<script setup>
+import Logout from "./auth/Logout.vue";
+import axios from "redaxios";
+import { useRouter } from "vue-router";
+const router = useRouter();
 </script>
-
-<style scoped>
-/* Add your header styles here */
-</style>
