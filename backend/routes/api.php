@@ -27,12 +27,11 @@ Route::apiResource('/student', StudentController::class);
 Route::middleware('auth:sanctum')->group(
     function () {
         Route::apiResource('/course', CourseController::class);
-        Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
     }
 );
 
 
 
-
+Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login'])->name('login');

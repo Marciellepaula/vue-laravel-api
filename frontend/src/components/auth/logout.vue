@@ -5,12 +5,13 @@
 <script setup>
 import { useRouter } from "vue-router"; // Import useRouter outside of script setup
 const router = useRouter();
+import axios from "redaxios";
 import { useToast } from "vue-toastification";
 const toast = useToast();
 
 const logout = async () => {
   try {
-    axios.post("http://localhost/api/logout");
+    const response = await axios.post("http://localhost/api/logout");
     router.push("/login");
     toast.fire({
       icon: "success",
