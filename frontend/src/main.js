@@ -24,7 +24,7 @@ const routes = [
   }, // Route for editing a course
   { path: "/register", component: register },
   { path: "/login", component: login },
-  { path: "/logout", component: logout },
+  { path: "/logout", component: logout, meta: { requiresAuth: true } },
 ];
 
 const router = createRouter({
