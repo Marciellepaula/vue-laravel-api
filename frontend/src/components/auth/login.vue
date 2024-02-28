@@ -91,7 +91,7 @@ const login = () => {
       if (response.data && response.data.success) {
         const token = response.data.token;
         localStorage.setItem("token", token);
-        router.push("/");
+        router.push("/Home");
       } else {
         console.error("Login Error:", response.data.message);
       }

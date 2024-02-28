@@ -1,6 +1,6 @@
 <template>
   <header class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-light container">
+    <nav class="navbar-expand-lg navbar-light container">
       <router-link to="/" class="navbar-brand">Course Platform</router-link>
       <button
         class="navbar-toggler"
@@ -17,7 +17,7 @@
         class="collapse btn-primary navbar-collapse justify-content-end"
         id="navbarNav"
       >
-        <ul class="navbar-nav">
+        <ul class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
           <li class="nav-item">
             <router-link to="/" class="nav-link">Home</router-link>
           </li>

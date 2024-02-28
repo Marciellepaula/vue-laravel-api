@@ -7,12 +7,14 @@ import CourseForm from "./views/CourseForm.vue";
 import CourseUpdate from "./views/CourseUpdate.vue";
 import CourseList from "./views/CourseList.vue";
 import Home from "./views/Home.vue";
+import Inicial from "./views/inicial.vue";
 import login from "./components/auth/login.vue";
 import register from "./components/auth/register.vue";
 import logout from "./components/auth/logout.vue";
 
 const routes = [
-  { path: "/", component: Home, meta: { requiresAuth: true } },
+  { path: "/", component: Inicial },
+  { path: "/home", component: Home, meta: { requiresAuth: true } },
   { path: "/courses", component: CourseList, meta: { requiresAuth: true } },
   { path: "/courses/new", component: CourseForm, meta: { requiresAuth: true } }, // Route for adding a new course
   {
